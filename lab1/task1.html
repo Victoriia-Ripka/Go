@@ -1,0 +1,23 @@
+<!-- forms.html -->
+{{if .Success}}
+    <h1>Завдання 1</h1>
+{{else}}
+    <h1>Завдання 1</h1>
+    <form method="POST">
+        <label>H:</label><br />
+        <input type="text" name="H"><br />
+        <label>C:</label><br />
+        <input type="text" name="C"><br />
+        <label>S:</label><br />
+        <textarea name="S"></textarea><br />
+        <label>N:</label><br />
+        <input type="text" name="N"><br />
+        <label>O:</label><br />
+        <input type="text" name="O"><br />
+        <label>W:</label><br />
+        <textarea name="W"></textarea><br />
+        <label>A:</label><br />
+        <textarea name="A"></textarea><br />
+        <input type="submit">
+    </form>
+{{end}}
