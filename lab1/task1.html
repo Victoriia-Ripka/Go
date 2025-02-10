@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 50px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Завдання 1</h1>
+
+<form method="POST">
+    <label>Водень (H):</label>
+    <input type="text" name="H" required />
+
+    <label>Вуглець (C):</label>
+    <input type="text" name="C" required />
+
+    <label>Сірка (S):</label>
+    <input type="text" name="S" required />
+
+    <label>Азот (N):</label>
+    <input type="text" name="N" required />
+
+    <label>Кисень (O):</label>
+    <input type="text" name="O" required />
+
+    <label>Волога (W):</label>
+    <input type="text" name="W" required />
+
+    <label>Зола (A):</label>
+    <input type="text" name="A" required />
+
+    <br><br>
+    <input type="submit" value="Розрахувати" />
+</form>
+
+{{if.Success}} 
+    <h2>Результати</h2>
+
+    <h3>Склад палива</h3>
+    <table>
+        <tr>
+            <th>Компонент</th>
+            <th>Початковий склад (%)</th>
+            <th>Суха маса (%)</th>
+            <th>Горюча маса (%)</th>
+        </tr>
+        <tr><td>Водень (H)</td><td>{{index .InitialComposition 0 | printf "%.2f"}}</td><td>{{index .DryComposition 0 | printf "%.2f"}}</td><td>{{index .BurnComposition 0 | printf "%.2f"}}</td></tr>
+        <tr><td>Вуглець (C)</td><td>{{index .InitialComposition 1 | printf "%.2f"}}</td><td>{{index .DryComposition 1 | printf "%.2f"}}</td><td>{{index .BurnComposition 1 | printf "%.2f"}}</td></tr>
+        <tr><td>Сірка (S)</td><td>{{index .InitialComposition 2 | printf "%.2f"}}</td><td>{{index .DryComposition 2 | printf "%.2f"}}</td><td>{{index .BurnComposition 2 | printf "%.2f"}}</td></tr>
+        <tr><td>Кисень (O)</td><td>{{index .InitialComposition 3 | printf "%.2f"}}</td><td>{{index .DryComposition 3 | printf "%.2f"}}</td><td>{{index .BurnComposition 3 | printf "%.2f"}}</td></tr>
+        <tr><td>Азот (N)</td><td>{{index .InitialComposition 4 | printf "%.2f"}}</td><td>{{index .DryComposition 4 | printf "%.2f"}}</td><td>{{index .BurnComposition 4 | printf "%.2f"}}</td></tr>
+        <tr><td>Зола (A)</td><td>{{index .InitialComposition 6 | printf "%.2f"}}</td><td>{{index .DryComposition 5 | printf "%.2f"}}</td><td>-</td></tr>
+        <tr><td>Волога (W)</td><td>{{index .InitialComposition 5 | printf "%.2f"}}</td><td>-</td><td>-</td></tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Параметр</th>
+            <th>Значення</th>
+        </tr>
+        <tr>
+            <td>Коефіцієнт переходу від робочої до сухої маси</td>
+            <td>{{printf "%.2f" .CoeffWorkDry}}</td>
+        </tr>
+        <tr>
+            <td>Коефіцієнт переходу від робочої до горючої маси</td>
+            <td>{{printf "%.2f" .CoeffWorkBurn}}</td>
+        </tr>
+        <tr>
+            <td>Теплота згоряння, МДж/кг</td>
+            <td>{{printf "%.2f" .HeatCombustion}}</td>
+        </tr>
+        <tr>
+            <td>Теплота згоряння сухого палива, МДж/кг</td>
+            <td>{{printf "%.2f" .DryFuelHeatCombustion}}</td>
+        </tr>
+        <tr>
+            <td>Теплота згоряння паливної маси, МДж/кг</td>
+            <td>{{printf "%.2f" .BurnFuelHeatCombustion}}</td>
+        </tr>
+    </table>
+{{end}}
+
+</body>
+</html>
