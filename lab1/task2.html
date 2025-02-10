@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Завдання 2</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      textarea {
+        width: 100%;
+        height: 50px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      th {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Завдання 2</h1>
+
+    <form method="POST">
+      <label>Вуглець (C):</label>
+      <input type="text" name="C" required />
+
+      <label>Водень (H):</label>
+      <input type="text" name="H" required />
+
+      <label>Кисень (O):</label>
+      <input type="text" name="O" required />
+
+      <label>Сірка (S):</label>
+      <input type="text" name="S" required />
+
+      <label>... (Q):</label>
+      <input type="text" name="Q" required />
+
+      <label>Волога (W):</label>
+      <input type="text" name="W" required />
+
+      <label>Зола (A):</label>
+      <input type="text" name="A" required />
+
+      <label>Ванадій (V):</label>
+      <input type="text" name="V" required />
+
+      <br /><br />
+      <input type="submit" value="Розрахувати" />
+    </form>
+
+    {{if.Success}}
+    <h2>Результати</h2>
+
+    <table>
+      <tr>
+        <th>Параметр</th>
+        <th>Значення</th>
+      </tr>
+      <tr>
+        <td>Нижча теплота згоряння мазуту, МДж/кг</td>
+        <td>{{printf "%.2f" .HeatCombustion}}</td>
+      </tr>
+    </table>
+
+    <h3>Склад робочого палива</h3>
+    <table>
+        <tr>
+          <th>Компонент</th>
+          <th>Значення (%)</th>
+          <th>Горюча маса (%)</th>
+        </tr>
+        <tr>
+          <td>Вуглець (C)</td>
+          <td>{{printf "%.2f" .C}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 0)}}</td>
+        </tr>
+        <tr>
+          <td>Водень (H)</td>
+          <td>{{printf "%.2f" .H}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 1)}}</td>
+        </tr>
+        <tr>
+          <td>Кисень (O)</td>
+          <td>{{printf "%.2f" .O}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 2)}}</td>
+        </tr>
+        <tr>
+          <td>Сірка (S)</td>
+          <td>{{printf "%.2f" .S}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 3)}}</td>
+        </tr>
+        <tr>
+          <td>Зола (A)</td>
+          <td>{{printf "%.2f" .A}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 4)}}</td>
+        </tr>
+        <tr>
+          <td>Волога (W)</td>
+          <td>{{printf "%.2f" .W}}</td>
+          <td>-</td> 
+        </tr>
+        <tr>
+          <td>Леткі речовини (V)</td>
+          <td>{{printf "%.2f" .V}}</td>
+          <td>{{printf "%.2f" (index .WorkFuelPercentage 5)}}</td>
+        </tr>
+      </table>
+    {{end}}
+  </body>
+</html>
