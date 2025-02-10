@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
+	"lab1/logic"
 	"log"
 	"net/http"
 	"strconv"
-	"lab1/logic"
 )
 
 type CompositionFuelComponents struct {
@@ -50,13 +49,58 @@ func handleCalculate(w http.ResponseWriter, r *http.Request) {
 		compositionFuelComponents.N,
 	})
 
+	heatCombustion := logic.CalculateHeatCombustion(
+		compositionFuelComponents.C,
+		compositionFuelComponents.H,
+		compositionFuelComponents.O,
+		compositionFuelComponents.S,
+		compositionFuelComponents.W,
+	)
+
+	dryFuelHeatCombustion := logic.CalculateDryFuelHeatCombustion(
+		heatCombustion,
+		compositionFuelComponents.W,
+		coeffWorkDry,
+	)
+
+	burnFuelHeatCombustion := logic.CalculateBurnFuelHeatCombustion(
+		heatCombustion,
+		compositionFuelComponents.W,
+		coeffWorkBurn,
+	)
+
+	// Prepare data for template
+	data := struct {
+		Success                bool
+		InitialComposition     []float64
+		DryComposition         []float64
+		BurnComposition        []float64
+		CoeffWorkDry		   float64
+		CoeffWorkBurn		   float64
+		HeatCombustion         float64
+		DryFuelHeatCombustion  float64
+		BurnFuelHeatCombustion float64
+	}{
+		Success:               true,
+		InitialComposition: []float64{
+			compositionFuelComponents.H,
+			compositionFuelComponents.C,
+			compositionFuelComponents.S,
+			compositionFuelComponents.O,
+			compositionFuelComponents.N,
+			compositionFuelComponents.W,
+			compositionFuelComponents.A,
+		},
+		DryComposition:        dryCompositionFuelComponents,
+		BurnComposition:       burnCompositionFuelComponents,
+		CoeffWorkDry: 		   coeffWorkDry,
+		CoeffWorkBurn:		   coeffWorkBurn,
+		HeatCombustion:        heatCombustion,
+		DryFuelHeatCombustion: dryFuelHeatCombustion,
+		BurnFuelHeatCombustion: burnFuelHeatCombustion,
+	}
 	// Display the result
-	fmt.Fprintf(w, "Dry Composition: %v\n", dryCompositionFuelComponents)
-	fmt.Fprintf(w, "Burn Composition: %v\n", burnCompositionFuelComponents)
-
-	tmpl.Execute(w, struct{ Success bool }{true})
-
-	fmt.Fprint(w, "Hello world!")
+	tmpl.Execute(w, data)
 }
 
 func parseFormValue(r *http.Request, key string) float64 {
