@@ -16,16 +16,28 @@ func handleCalculate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
+	PcValue, err1 := strconv.ParseFloat(r.FormValue("Pc"), 64)
+	sigmaValue, err2 := strconv.ParseFloat(r.FormValue("sigma"), 64)
+	BValue, err3 := strconv.ParseFloat(r.FormValue("B"), 64)
 
-	data := struct {
+	if err1 != nil || err2 != nil || err3 != nil {
+		http.Error(w, "Невірний формат вхідних даних", http.StatusBadRequest)
+		return
+	}
+
+	profitValue := logic.CalculateP(PcValue, sigmaValue, BValue)
+
+data := struct {
 		Success bool
+		Profit  float64
 	}{
 		Success: true,
+		Profit:  profitValue,
 	}
 
 	tmpl.Execute(w, data)
 }
+
 
 func parseFormValue(r *http.Request, key string) float64 {
 	valueStr := r.FormValue(key)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Розрахунок прибутку</title>
     <style>
         body {
           font-family: Arial, sans-serif;
@@ -57,6 +57,27 @@
       </style>
 </head>
 <body>
-
+  <h1>Розрахунок прибутку</h1>
+  <form method="post">
+      <label for="Pc">Середньодобова потужність (ГДж):</label>
+      <input type="text" id="Pc" name="Pc">
+      <span id="error_text1" style="color: red;"></span>
+      <br>
+      <label for="sigma">Середньоквадратичне відхилення:</label>
+      <input type="text" id="sigma" name="sigma">
+      <span id="error_text2" style="color: red;"></span>
+      <br>
+      <label for="B">Вартість:</label>
+      <input type="text" id="B" name="B">
+      <span id="error_text3" style="color: red;"></span>
+      <br>
+      <button type="submit">Розрахувати</button>
+      <button type="reset">Скинути</button>
+  </form>
+  
+  {{if .Success}}
+  <h2>Результати:</h2>
+  <p>Прибуток становитиме: {{.Profit}} грн</p>
+  {{end}}
 </body>
 </html>
