@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Розрахунок емісії</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+          padding: 20px;
+        }
+        h1 {
+          text-align: center;
+        }
+        form {
+          max-width: 400px;
+          margin: 0 auto;
+          padding: 15px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          background: #f9f9f9;
+        }
+        label {
+          font-weight: bold;
+          display: block;
+          margin-top: 10px;
+        }
+        input {
+          width: 100%;
+          padding: 8px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        textarea {
+          width: 100%;
+          height: 50px;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        table {
+          width: 100%;
+          margin-top: 20px;
+          border-collapse: collapse;
+        }
+        th,
+        td {
+          padding: 10px;
+          border: 1px solid #ddd;
+          text-align: center;
+        }
+        th {
+          background: #f0f0f0;
+        }
+      </style>
+</head>
+<body>
+    <h1>Розрахунок емісії твердих частинок</h1>
+    <form action="/" method="post">
+        <label for="coal">Кількість вугілля (ГДж):</label>
+        <input type="number" step="any" id="coal" name="coal" required>
+        <br>
+        
+        <label for="fuel">Кількість мазуту (ГДж):</label>
+        <input type="number" step="any" id="fuel" name="fuel" required>
+        <br>
+        
+        <label for="gas">Кількість газу (ГДж):</label>
+        <input type="number" step="any" id="gas" name="gas" required>
+        <br>
+        
+        <button type="submit">Розрахувати</button>
+    </form>
+    
+    {{ if .Success }}
+    <h2>Результати</h2>
+    <p>Показник емісії твердих частинок (вугілля): {{ .KCoal }} г/ГДж</p>
+    <p>Валовий викид (вугілля): {{ .ECoal }} т</p>
+    <p>Показник емісії твердих частинок (мазут): {{ .KFuel }} г/ГДж</p>
+    <p>Валовий викид (мазут): {{ .EFuel }} т</p>
+    <p>Показник емісії твердих частинок (газ): {{ .KGas }} г/ГДж</p>
+    <p>Валовий викид (газ): {{ .EGas }} т</p>
+    {{ end }}
+</body>
+</html>
