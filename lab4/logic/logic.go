@@ -95,25 +95,53 @@ func (cs *CalculatorService) DeterminateCurrent(u, sk, sNomt float64) float64 {
 
 // DeterminateSubstationCurrent computes various substation currents
 func (c *CalculatorService) DeterminateSubstationCurrent() [4]float64 {
-	uVn, sNomt, uKMax := 115.0, 6.3, 11.1
-	Rsn110, Xcn110, Rsmin110, Xcmin110 := 10.65, 24.02, 34.88, 65.68
+	uVn := 115.0
+	uKMax := 11.1
+	sNomt := 6.3
+	Xcn110 := 24.02
+	Rsn110 := 10.65
+	Xcmin110 := 65.68
+	Rsmin110 := 34.88
 
 	xT := (uKMax * math.Pow(uVn, 2)) / (100 * sNomt)
-	rSH, xSH := Rsn110, Xcn110+xT
-	zSH := math.Hypot(rSH, xSH)
 
-	rSHmin, xSHmin := Rsmin110, Xcmin110+xT
-	zSHmin := math.Hypot(rSHmin, xSHmin)
+	rSH := Rsn110
+	xSH := Xcn110 + xT
 
-	i3SH := uVn * 1000 / (math.Sqrt(3) * zSH)
-	i2SH := i3SH * math.Sqrt(3) / 2
-	i3SHmin := uVn * 1000 / (math.Sqrt(3) * zSHmin)
-	i2SHmin := i3SHmin * math.Sqrt(3) / 2
+	rSHmin := Rsmin110
+	xSHmin := Xcmin110 + xT
 
-	return [4]float64{
-		math.Round(i3SH*100) / 100,
-		math.Round(i2SH*100) / 100,
-		math.Round(i3SHmin*100) / 100,
-		math.Round(i2SHmin*100) / 100,
-	}
+	k := math.Pow(uKMax, 2) / math.Pow(uVn, 2)
+
+	rSHn := rSH * k
+	xSHn := xSH * k
+
+	rSHnmin := rSHmin * k
+	xSHnmin := xSHmin * k
+
+	l := 12.37
+	r0 := 0.64
+	x0 := 0.363
+	rL := l * r0
+	xL := l * x0
+
+	rSum := rL + rSHn
+	xSum := xL + xSHn
+	zSum := math.Hypot(rSum, xSum)
+
+	rSumMin := rL + rSHnmin
+	xSumMin := xL + xSHnmin
+	zSumMin := math.Hypot(rSumMin, xSumMin)
+
+	i3LN := uKMax * 1000 / (math.Sqrt(3) * zSum)
+	i2LN := i3LN * math.Sqrt(3) / 2
+	i3LNmin := uKMax * 1000 / (math.Sqrt(3) * zSumMin)
+	i2LNmin := i3LNmin * math.Sqrt(3) / 2
+
+	roundedValue1 := math.Round(i3LN*100) / 100
+	roundedValue2 := math.Round(i2LN*100) / 100
+	roundedValue3 := math.Round(i3LNmin*100) / 100
+	roundedValue4 := math.Round(i2LNmin*100) / 100
+
+	return [4]float64{roundedValue1, roundedValue2, roundedValue3, roundedValue4}
 }
