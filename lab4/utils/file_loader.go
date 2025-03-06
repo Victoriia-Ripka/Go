@@ -6,7 +6,6 @@ import (
 	"os"
 )
 
-// LoadCableData loads the cable_data.json file and returns parsed data
 func LoadCableData(filePath string) ([]map[string]interface{}, error) {
 	file, err := os.ReadFile(filePath)
 	if err != nil {

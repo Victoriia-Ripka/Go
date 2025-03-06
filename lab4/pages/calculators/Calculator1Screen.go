@@ -11,7 +11,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// Calculator1Screen створює інтерфейс для калькулятора 1
 func Calculator1Screen(goBack func()) fyne.CanvasObject {
 	var conductor, cableType string
 	timeRange := 1000

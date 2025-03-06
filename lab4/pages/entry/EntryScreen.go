@@ -6,7 +6,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// EntryScreen creates the main entry screen with navigation buttons
 func EntryScreen(
 	onCalculator1Navigate func(),
 	onCalculator2Navigate func(),
