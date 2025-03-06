@@ -85,7 +85,7 @@ func (cs *CalculatorService) CalculateCablesCompatibility(conductor, cableType s
 }
 
 // DeterminateCurrent calculates the short-circuit current
-func DeterminateCurrent(u, sk, sNomt float64) float64 {
+func (cs *CalculatorService) DeterminateCurrent(u, sk, sNomt float64) float64 {
 	Xc := math.Pow(u, 2) / sk
 	Xt := (u / 100) * (math.Pow(u, 2) / sNomt)
 	X := Xc + Xt

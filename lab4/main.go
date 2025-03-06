@@ -1,28 +1,34 @@
 package main
 
 import (
+	"fmt"
+
 	"lab4/logic"
-	"lab4/pages/entry"
 	"lab4/pages/calculators"
+	"lab4/pages/entry"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
+	// "fyne.io/fyne/v2/widget"
 )
 
 const (
-	MainScreen     = "Main Screen"
-	Calculator1    = "Calculator 1"
-	Calculator2    = "Calculator 2"
-	Calculator3    = "Calculator 3"
+	MainScreen  = "Main Screen"
+	Calculator1 = "Calculator 1"
+	Calculator2 = "Calculator 2"
+	Calculator3 = "Calculator 3"
 )
 
 func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Lab 4")
 
-	calculatorService := logic.NewCalculatorService("/assets/cable_data.json")
+	calculatorService, err := logic.NewCalculatorService("assets/cable_data.json")
+	if err != nil {
+		fmt.Println("Error loading calculator service:", err)
+		return
+	}
 
 	tabs := container.NewAppTabs()
 
@@ -33,7 +39,11 @@ func main() {
 	)))
 
 	tabs.Append(container.NewTabItem(Calculator1, calculators.Calculator1Screen(
-		func() { tabs.SelectIndex(0) }, 
+		func() { tabs.SelectIndex(0) },
+	)))
+
+	tabs.Append(container.NewTabItem(Calculator2, calculators.Calculator2Screen(
+		func() { tabs.SelectIndex(0) }, calculatorService,
 	)))
 
 	tabs.SetTabLocation(container.TabLocationTop)
