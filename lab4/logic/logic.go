@@ -94,7 +94,7 @@ func (cs *CalculatorService) DeterminateCurrent(u, sk, sNomt float64) float64 {
 }
 
 // DeterminateSubstationCurrent computes various substation currents
-func DeterminateSubstationCurrent() [4]float64 {
+func (c *CalculatorService) DeterminateSubstationCurrent() [4]float64 {
 	uVn, sNomt, uKMax := 115.0, 6.3, 11.1
 	Rsn110, Xcn110, Rsmin110, Xcmin110 := 10.65, 24.02, 34.88, 65.68
 

@@ -10,7 +10,6 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	// "fyne.io/fyne/v2/widget"
 )
 
 const (
@@ -43,6 +42,10 @@ func main() {
 	)))
 
 	tabs.Append(container.NewTabItem(Calculator2, calculators.Calculator2Screen(
+		func() { tabs.SelectIndex(0) }, calculatorService,
+	)))
+
+	tabs.Append(container.NewTabItem(Calculator3, calculators.Calculator3Screen(
 		func() { tabs.SelectIndex(0) }, calculatorService,
 	)))
 
