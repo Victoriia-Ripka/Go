@@ -1,69 +1,50 @@
 package calculators
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
+	"path/filepath"
 	"lab5/services"
 )
 
 func Calculator2Screen(w http.ResponseWriter, r *http.Request) {
-	calculatorService := &service.CalculatorService{}
-
-	result := calculatorService.CalculateLosses()
-
-	tmpl, err := template.New("calculator2").Parse(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Calculator 2</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			text-align: center;
-			padding: 20px;
-		}
-		.button {
-			font-size: 18px;
-			font-weight: bold;
-			padding: 10px 20px;
-			margin: 10px;
-			cursor: pointer;
-			border: 2px solid #007BFF;
-			background-color: #007BFF;
-			color: white;
-			border-radius: 5px;
-		}
-		.button:hover {
-			background-color: #0056b3;
-		}
-	</style>
-</head>
-<body>
-	<h1>Завдання 2</h1>
-	<h3>Розрахунок збитків від перерв електропостачання</h3>
-	<button class="button" onclick="window.location.href='/calculate2'">Розрахувати</button>
-	<br>
-	{{if .result}}
-		<p>Математичне сподівання збитків від переривання електропостачання: {{.result}}</p>
-	{{else}}
-		<p>Натисніть "Розрахувати" для отримання результатів.</p>
-	{{end}}
-	<br>
-	<button class="button" onclick="window.location.href='/'">Повернутися назад</button>
-</body>
-</html>
-	`)
-
+	tmplPath, err := filepath.Abs("screens/html/screen2.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Помилка отримання шляху до шаблону", http.StatusInternalServerError)
+		fmt.Println("Помилка отримання шляху:", err)
 		return
 	}
 
-	tmpl.Execute(w, struct {
-		result string
+	tmpl, err := template.ParseFiles(tmplPath)
+	if err != nil {
+		http.Error(w, "Помилка завантаження шаблону", http.StatusInternalServerError)
+		fmt.Println("Помилка парсингу шаблону:", err)
+		return
+	}
+
+	if r.Method != http.MethodPost {
+		err = tmpl.Execute(w, struct {
+			Success bool
+			result string
+		}{Success: false})
+		if err != nil {
+			fmt.Println("Помилка рендеру шаблону:", err)
+		}
+		return
+	}
+
+	calculatorService := &service.CalculatorService{}
+	result := calculatorService.CalculateLosses()
+
+	err = tmpl.Execute(w, struct {
+		Success bool
+		Result string
 	}{
-		result: result,
+		Success: true,
+		Result: result,
 	})
+	if err != nil {
+		fmt.Println("Помилка рендеру шаблону:", err)
+	}
 }
