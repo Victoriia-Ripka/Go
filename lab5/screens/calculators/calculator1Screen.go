@@ -1,73 +1,58 @@
 package calculators
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
+	"path/filepath"
 	"lab5/services"
 )
 
 func Calculator1Screen(w http.ResponseWriter, r *http.Request) {
-	calculatorService := &service.CalculatorService{}
-
-	result := calculatorService.CompareReliabilitySystems()
-	wDk := result[0]
-	wDs := result[1]
-
-	tmpl, err := template.New("calculator").Parse(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Calculator 1</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			text-align: center;
-			padding: 20px;
-		}
-		.button {
-			font-size: 18px;
-			font-weight: bold;
-			padding: 10px 20px;
-			margin: 10px;
-			cursor: pointer;
-			border: 2px solid #007BFF;
-			background-color: #007BFF;
-			color: white;
-			border-radius: 5px;
-		}
-		.button:hover {
-			background-color: #0056b3;
-		}
-	</style>
-</head>
-<body>
-	<h1>Завдання 1</h1>
-	<h3>Порівняння надійності одноколової та двоколової систем електропередач</h3>
-	<button class="button" onclick="window.location.href='/calculate'">Розрахувати</button>
-	<br>
-	{{if .wDk}}
-		<p>Результат: w_dk = {{.wDk}}, w_ds = {{.wDs}} <br>Надійність двоколової системи є вищою</p>
-	{{else}}
-		<p>Натисніть "Розрахувати" для отримання результатів.</p>
-	{{end}}
-	<br>
-	<button class="button" onclick="window.location.href='/'">Повернутися назад</button>
-</body>
-</html>
-	`)
-
+	tmplPath, err := filepath.Abs("screens/html/screen1.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Помилка отримання шляху до шаблону", http.StatusInternalServerError)
+		fmt.Println("Помилка отримання шляху:", err)
 		return
 	}
 
-	tmpl.Execute(w, struct {
-		wDk float64
-		wDs float64
+	tmpl, err := template.ParseFiles(tmplPath)
+	if err != nil {
+		http.Error(w, "Помилка завантаження шаблону", http.StatusInternalServerError)
+		fmt.Println("Помилка парсингу шаблону:", err)
+		return
+	}
+
+	if r.Method != http.MethodPost {
+		err = tmpl.Execute(w, struct {
+			Success bool
+			wDk     float64
+			wDs     float64
+		}{Success: false})
+		if err != nil {
+			fmt.Println("Помилка рендеру шаблону:", err)
+		}
+		return
+	}
+
+	calculatorService := &service.CalculatorService{}
+	result := calculatorService.CompareReliabilitySystems()
+	if len(result) < 2 {
+		http.Error(w, "Помилка розрахунку", http.StatusInternalServerError)
+		fmt.Println("Помилка: функція повернула недостатньо значень")
+		return
+	}
+
+	err = tmpl.Execute(w, struct {
+		Success bool
+		WDk     float64
+		WDs     float64
 	}{
-		wDk: wDk,
-		wDs: wDs,
+		Success: true,
+		WDk:     result[0],
+		WDs:     result[1],
 	})
+	if err != nil {
+		fmt.Println("Помилка рендеру шаблону:", err)
+	}
 }

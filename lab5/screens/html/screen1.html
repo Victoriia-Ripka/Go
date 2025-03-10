@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator 1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      .button {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border: 2px solid #007bff;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Завдання 1</h1>
+    <h3>Порівняння надійності одноколової та двоколової систем електропередач</h3>
+
+    <form method="POST">
+      <button class="button" type="submit">Розрахувати</button>
+    </form>
+    <br />
+    <button class="button" onclick="window.location.href='/'">Повернутися назад</button>
+    <br />
+
+    {{if .Success}}
+      <h2>Результати</h2>
+      <p> w_dk = {{.WDk}}</p>
+      <p>w_ds = {{.WDs}}</p> 
+      <p>Надійність двоколової системи є вищою</p>
+    {{else}}
+      <p>Натисніть "Розрахувати" для отримання результатів.</p>
+    {{end}}
+  </body>
+</html>
