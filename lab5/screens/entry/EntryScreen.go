@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func mainScreen(w http.ResponseWriter, r *http.Request) {
+func MainScreen(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.New("entry").Parse(`
 <!DOCTYPE html>
 <html lang="en">

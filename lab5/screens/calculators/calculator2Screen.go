@@ -6,10 +6,10 @@ import (
 	"lab5/services"
 )
 
-func calculator2Screen(w http.ResponseWriter, r *http.Request) {
+func Calculator2Screen(w http.ResponseWriter, r *http.Request) {
 	calculatorService := &service.CalculatorService{}
 
-	result := calculatorService.CalculateLoses()
+	result := calculatorService.CalculateLosses()
 
 	tmpl, err := template.New("calculator2").Parse(`
 <!DOCTYPE html>

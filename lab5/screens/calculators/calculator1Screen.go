@@ -6,7 +6,7 @@ import (
 	"lab5/services"
 )
 
-func calculator1Screen(w http.ResponseWriter, r *http.Request) {
+func Calculator1Screen(w http.ResponseWriter, r *http.Request) {
 	calculatorService := &service.CalculatorService{}
 
 	result := calculatorService.CompareReliabilitySystems()
