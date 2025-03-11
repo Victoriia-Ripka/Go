@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор електричних навантажень</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .btn {
+            padding: 10px;
+            background-color: #6200EE;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Практична робота №6</div>
+        <div>Розробник: Новотка Вікторія</div>
+        
+        <h2>Завдання 1</h2>
+        <p>Калькулятор розрахунку електричних навантажень об’єктів.</p>
+        
+        <div id="epInputs"></div>
+        
+        <button class="btn" onclick="fillFields('assets/testInputs.json')">Заповнити поля</button>
+        <button class="btn" onclick="calculate()">Розрахувати</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function fillFields(jsonFile) {
+            fetch(jsonFile)
+                .then(response => response.json())
+                .then(data => {
+                    const epInputsDiv = document.getElementById('epInputs');
+                    epInputsDiv.innerHTML = '';
+                    data.forEach((ep, index) => {
+                        epInputsDiv.innerHTML += `
+                            <div class="input-group">
+                                <label>ЕП #${index + 1}</label>
+                                <input type="number" value="${ep.name}" placeholder="Найменування ЕП">
+                            </div>`;
+                    });
+                })
+                .catch(error => console.error('Error loading inputs:', error));
+        }
+        
+        function calculate() {
+            document.getElementById('result').innerHTML = `<p>Результати розрахунку...</p>`;
+        }
+    </script>
+</body>
+</html>
