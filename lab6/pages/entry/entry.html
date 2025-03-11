@@ -62,8 +62,7 @@
         <h2>Завдання 1</h2>
         <p>Калькулятор розрахунку електричних навантажень об’єктів.</p>
         
-        <!-- action="/calculate" -->
-        <form id="calcForm" method="POST" >
+        <form id="calcForm" method="POST" action="/calculate" >
             <div class="ep-group">
                 <p>ЕП1</p>
                 <div class="input-group">
@@ -357,21 +356,55 @@
         </form>
         
         <div id="result">
-            {{if .Result}}
-                <h3>Результати розрахунку:</h3>
+            {{if .Success}}
+                <p>Для заданого складу ЕП та їх характеристик цехової мережі силове навантаження становитиме:</p>
                 <ul>
-                    <li><strong>KV:</strong> {{.Result.KV}}</li>
-                    <li><strong>Pp:</strong> {{.Result.Pp}}</li>
-                    <li><strong>Sp:</strong> {{.Result.Sp}}</li>
-                    <li><strong>Ip:</strong> {{.Result.Ip}}</li>
+                    <li>Груповий коефіцієнт використання для ШР1=ШР2=ШР3: {{.Result.KV}}</li>               <!-- .Result.KV = 0.15  -> 0.21!!!-->
+                    <li>Ефективна кількість ЕП для ШР1=ШР2=ШР3: {{.Result.Pp}}</li>                         <!--.Result.NPhSum =  80 -> 15!!! -->
+                    <li>Розрахунковий коефіцієнт активної потужності для ШР1=ШР2=ШР3: {{.Result.Pp}}</li>   <!-- .Result.Pp = 15 -> 1.25!!!-->
+                    <li>Розрахункове активне навантаження для ШР1=ШР2=ШР3: {{.Result.Sp}}</li>              <!-- 23.09 -> 118.95!!! -->
+                    <li>Розрахункове реактивне навантаження для ШР1=ШР2=ШР3: {{.Result.Ip}}</li>            <!-- 39.47 -> 107.3!!! -->
+                    <li>Повна потужність для ШР1=ШР2=ШР3: {{.Result.AllKV}}</li>                            <!-- 0.32 -> 160.2!!! -->
+                    <li>Розрахунковий груповий струм для ШР1=ШР2=ШР3: {{.Result.AllNe}}</li>                <!-- 56.32 -> 313.03!!! -->
+                    <li>Коефіцієнти використання цеху в цілому: {{index .Result.ResultArray 7}}</li> <!-- 0.32 -->
+                    <li>Ефективна кількість ЕП цеху в цілому: {{index .Result.ResultArray 8}}</li>  <!-- 56.32 -->
+                    <li>Розрахунковий коефіцієнт активної потужності цеху в цілому: {{index .Result.ResultArray 9}}</li>  <!-- 0.7 -->
+                    <li>Розрахункове активне навантаження на шинах 0,38 кВ ТП: {{index .Result.ResultArray 10}}</li>  <!-- 526.4 -->
+                    <li>Розрахункове реактивне навантаження на шинах 0,38 кВ ТП: {{index .Result.ResultArray 11}}</li>  <!-- 459.9 -->
+                    <li>Повна потужність на шинах 0,38 кВ ТП: {{index .Result.ResultArray 12}}</li>  <!-- 699 -->
+                    <li>Розрахунковий груповий струм на шинах 0,38 кВ ТП: {{index .Result.ResultArray 13}}</li>  <!-- 1385.26 -->
                 </ul>
             {{else}}
-                <p>Очікуємо результат...</p>
+                <p>Результати розрахунку не можуть бути виведені через помилку у значеннях.</p>
             {{end}}
         </div>
     </div>
 
     <script>
+        document.getElementById("calcForm").addEventListener("submit", async function(event) {
+            const formData = new FormData(this); 
+            const data = new URLSearchParams(formData).toString(); 
+
+            try {
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded', 
+                    },
+                    body: data,
+                });
+
+                if (response.ok) {
+                    const result = await response.text(); 
+                    document.getElementById('result').innerHTML = `<p>${result}</p>`;
+                } else {
+                    console.log('Error submitting form:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
         async function fillForm() {
             try {
                 const response = await fetch('../../assets/testInputs.json');
@@ -398,11 +431,6 @@
                 console.log(name);
                 console.log(message)
             }
-        }
-
-        
-        function calculate() {
-            document.getElementById('result').innerHTML = `<p>Результати розрахунку...</p>`;
         }
     </script>
 </body>
