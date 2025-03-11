@@ -1,7 +1,7 @@
 package entry
 
 import (
-	// "fmt"
+	"fmt"
 	"html/template"
 	"net/http"
 	// "path/filepath"
@@ -41,53 +41,48 @@ func MainScreen(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+func createEPInput(r *http.Request, index int) service.EPInput {
+	count, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-count", index)), 64)
+	capacity, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-capacity", index)), 64)
+	coefUsage, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-coefUsage", index)), 64)
+	coeffReactPower, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-coeffReactPower", index)), 64)
+	voltage, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-voltage", index)), 64)
+	coeffPower, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-coeffPower", index)), 64)
+	coeffUsefulAct, _ := strconv.ParseFloat(r.FormValue(fmt.Sprintf("ep%d-coeffUsefulAct", index)), 64)
+
+	return service.EPInput{
+		Count:           count,
+		Capacity:        capacity,
+		CoefUsage:       coefUsage,
+		CoeffReactPower: coeffReactPower,
+		Voltage:         voltage,
+		CoeffPower:      coeffPower,
+		CoeffUsefulAct:  coeffUsefulAct,
+	}
+}
+
 func CalculateHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
         return
     }
 
-    // Helper function to extract and parse form values
-    parseFormValue := func(field string) float64 {
-        value, err := strconv.ParseFloat(r.FormValue(field), 64)
-        if err != nil {
-            http.Error(w, "Invalid "+field+" value", http.StatusBadRequest)
-            return 0
-        }
-        return value
-    }
+    if err := r.ParseForm(); err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
 
-    // Parsing form values
-    count := parseFormValue("count")
-    capacity := parseFormValue("capacity")
-    coefUsage := parseFormValue("coefUsage")
-    coeffReactPower := parseFormValue("coeffReactPower")
-    voltage := parseFormValue("voltage")
-    coeffPower := parseFormValue("coeffPower")
-    coeffUsefulAct := parseFormValue("coeffUsefulAct")
-
-    // Creating input array
-    epInputs := []service.EPInput{
-        {
-            Count:           count,
-            Capacity:        capacity,
-            CoefUsage:       coefUsage,
-            CoeffReactPower: coeffReactPower,
-            Voltage:         voltage,
-            CoeffPower:      coeffPower,
-            CoeffUsefulAct:  coeffUsefulAct,
-        },
-    }
-
-    // Define constants
-    allNPh := 2330.0
-    allNPK := 752.0
-    allNPKtg := 657.0
-    allNP2 := 96399.0
+	var epInputs []service.EPInput
+	for i := 1; i <= 10; i++ {
+		epInputs = append(epInputs, createEPInput(r, i))
+	}
 
     // Step 3 calculations
+    fmt.Println("Value of epInputs:", epInputs)
     NPhList := calcService.CalculateNPh(epInputs)
+    fmt.Println("Value of NPhList:", NPhList)
     NPhSum := calcService.CalculateSumNPh(NPhList)
+    fmt.Println("Value of NPhSum:", NPhSum)
 
     // Step 4 calculations
     KV := calcService.CalculateGroupUtilizationCoeff(epInputs)
@@ -99,6 +94,11 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
     Ip := calcService.CalculateIp(Pp, epInputs[0].Voltage)
 
     // Step 6 calculations for all
+    allNPh := 2330.0
+    allNPK := 752.0
+    allNPKtg := 657.0
+    allNP2 := 96399.0
+
     allKV := allNPK / allNPh
     allNe := math.Pow(allNPh, 2.0) / allNP2
     allKp := 0.7
@@ -139,10 +139,10 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 		AllQp:           resultArray[11],
 		AllSp:           resultArray[12],
 		AllIp:           resultArray[13],
-		CoefUsage:       coefUsage,
-		CoeffReactPower: coeffReactPower,
-		Voltage:         voltage,
-		ResultArray:     resultArray, // Make sure ResultArray is included if you want to use it in the template
+		CoefUsage:       epInputs[0].CoefUsage,
+		CoeffReactPower: epInputs[0].CoeffReactPower,
+		Voltage:         epInputs[0].Voltage,
+		ResultArray:     resultArray,
 	}
 
     // Check if result array is not empty and first element > 0
