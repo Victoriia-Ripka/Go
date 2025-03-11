@@ -63,7 +63,7 @@
         <p>Калькулятор розрахунку електричних навантажень об’єктів.</p>
         
         <form id="calcForm" method="POST" action="/calculate" >
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП1</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП2</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП3</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП4</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -207,7 +207,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП5</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -243,7 +243,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП6</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -279,7 +279,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП7</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -315,7 +315,7 @@
                 </div>
             </div>
 
-            <div class="ep-group">
+            <div class="ep-group standart">
                 <p>ЕП8</p>
                 <div class="input-group">
                     <label>Name:</label>
@@ -350,15 +350,91 @@
                     <input type="number" name="coeffReactPower" step="0.01" placeholder="CoeffReactPower">
                 </div>
             </div>
+
+            <div class="ep-group extra">
+                <p>Крупні ЕП1</p>
+                <div class="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label>CoeffUsefulAct:</label>
+                    <input type="number" name="coeffUsefulAct" step="0.01" placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label>CoeffPower:</label>
+                    <input type="number" name="coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label>Voltage:</label>
+                    <input type="number" name="voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label>Count:</label>
+                    <input type="number" name="count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label>Capacity:</label>
+                    <input type="number" name="capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label>CoefUsage:</label>
+                    <input type="number" name="coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label>CoeffReactPower:</label>
+                    <input type="number" name="coeffReactPower" step="0.01" placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <div class="ep-group extra">
+                <p>Крупні ЕП2</p>
+                <div class="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label>CoeffUsefulAct:</label>
+                    <input type="number" name="coeffUsefulAct" step="0.01" placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label>CoeffPower:</label>
+                    <input type="number" name="coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label>Voltage:</label>
+                    <input type="number" name="voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label>Count:</label>
+                    <input type="number" name="count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label>Capacity:</label>
+                    <input type="number" name="capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label>CoefUsage:</label>
+                    <input type="number" name="coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label>CoeffReactPower:</label>
+                    <input type="number" name="coeffReactPower" step="0.01" placeholder="CoeffReactPower">
+                </div>
+            </div>
             
-            <button class="btn" type="submit">Розрахувати</button>
-            <button class="btn" type="button" onclick="fillForm()">Заповнити поля</button>
+            <div>
+                <button class="btn" type="submit">Розрахувати</button>
+                <button class="btn" type="button" onclick="fillForm()">Заповнити поля standart</button>
+                <button class="btn" type="button" onclick="fillFormExtra()">Заповнити поля extra</button>
+            </div>
+            
         </form>
         
         <div id="result">
             {{if .Success}}
                 <p>Для заданого складу ЕП та їх характеристик цехової мережі силове навантаження становитиме:</p>
-                <ul>
+                <ol>
                     <li>Груповий коефіцієнт використання для ШР1=ШР2=ШР3: {{.Result.KV}}</li>               <!-- .Result.KV = 0.15  -> 0.21!!!-->
                     <li>Ефективна кількість ЕП для ШР1=ШР2=ШР3: {{.Result.Pp}}</li>                         <!--.Result.NPhSum =  80 -> 15!!! -->
                     <li>Розрахунковий коефіцієнт активної потужності для ШР1=ШР2=ШР3: {{.Result.Pp}}</li>   <!-- .Result.Pp = 15 -> 1.25!!!-->
@@ -373,7 +449,7 @@
                     <li>Розрахункове реактивне навантаження на шинах 0,38 кВ ТП: {{index .Result.ResultArray 11}}</li>  <!-- 459.9 -->
                     <li>Повна потужність на шинах 0,38 кВ ТП: {{index .Result.ResultArray 12}}</li>  <!-- 699 -->
                     <li>Розрахунковий груповий струм на шинах 0,38 кВ ТП: {{index .Result.ResultArray 13}}</li>  <!-- 1385.26 -->
-                </ul>
+                </ol>
             {{else}}
                 <p>Результати розрахунку не можуть бути виведені через помилку у значеннях.</p>
             {{end}}
@@ -415,7 +491,35 @@
 
                 const data = await response.json();
                 data.forEach((item, index) => {
-                    const epGroup = document.querySelectorAll('.ep-group')[index];
+                    const epGroup = document.querySelectorAll('.standart')[index];
+
+                    epGroup.querySelector('input[name="text"]').value = item.name;
+                    epGroup.querySelector('input[name="coeffUsefulAct"]').value = item.coeffUsefulAct;
+                    epGroup.querySelector('input[name="coeffPower"]').value = item.coeffPower;
+                    epGroup.querySelector('input[name="voltage"]').value = item.voltage;
+                    epGroup.querySelector('input[name="count"]').value = item.count;
+                    epGroup.querySelector('input[name="capacity"]').value = item.capacity;
+                    epGroup.querySelector('input[name="coefUsage"]').value = item.coefUsage;
+                    epGroup.querySelector('input[name="coeffReactPower"]').value = item.coeffReactPower;
+                });
+            } catch ({ name, message }) {
+                console.error('Error loading JSON data');
+                console.log(name);
+                console.log(message)
+            }
+        }
+    
+        async function fillFormExtra() {
+            try {
+                const response = await fetch('../../assets/extraEPdata.json');
+         
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                data.forEach((item, index) => {
+                    const epGroup = document.querySelectorAll('.extra')[index];
 
                     epGroup.querySelector('input[name="text"]').value = item.name;
                     epGroup.querySelector('input[name="coeffUsefulAct"]').value = item.coeffUsefulAct;
