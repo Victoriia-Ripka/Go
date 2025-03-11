@@ -78,11 +78,11 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
     // Step 3 calculations
-    fmt.Println("Value of epInputs:", epInputs)
+    // fmt.Println("Value of epInputs:", epInputs)
     NPhList := calcService.CalculateNPh(epInputs)
-    fmt.Println("Value of NPhList:", NPhList)
+    // fmt.Println("Value of NPhList:", NPhList)
     NPhSum := calcService.CalculateSumNPh(NPhList)
-    fmt.Println("Value of NPhSum:", NPhSum)
+    // fmt.Println("Value of NPhSum:", NPhSum)
 
     // Step 4 calculations
     KV := calcService.CalculateGroupUtilizationCoeff(epInputs)
