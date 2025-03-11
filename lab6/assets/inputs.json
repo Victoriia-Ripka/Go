@@ -1,0 +1,82 @@
+[
+  {
+    "name": "EP1",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "4",
+    "capacity": "25",
+    "coefUsage": "0.15",
+    "coeffReactPower": "1.33"
+  },
+  {
+    "name": "EP2",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "2",
+    "capacity": "14",
+    "coefUsage": "0.12",
+    "coeffReactPower": "1"
+  },
+  {
+    "name": "EP3",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "4",
+    "capacity": "42",
+    "coefUsage": "0.15",
+    "coeffReactPower": "1.33"
+  },
+  {
+    "name": "EP4",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "1",
+    "capacity": "36",
+    "coefUsage": "0.3",
+    "coeffReactPower": "1.61"
+  },
+  {
+    "name": "EP5",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "1",
+    "capacity": "20",
+    "coefUsage": "0.5",
+    "coeffReactPower": "0.75"
+  },
+  {
+    "name": "EP6",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "1",
+    "capacity": "40",
+    "coefUsage": "0.26",
+    "coeffReactPower": "1"
+  },
+  {
+    "name": "EP7",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "2",
+    "capacity": "32",
+    "coefUsage": "0.2",
+    "coeffReactPower": "1"
+  },
+  {
+    "name": "EP8",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "1",
+    "capacity": "20",
+    "coefUsage": "0.65",
+    "coeffReactPower": "0.75"
+  }
+]

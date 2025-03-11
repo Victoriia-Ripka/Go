@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Зварювальний трансформатор",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "2",
+    "capacity": "100",
+    "coefUsage": "0.2",
+    "coeffReactPower": "3"
+  },
+  {
+    "name": "Сушильна шафа",
+    "coeffUsefulAct": "0.92",
+    "coeffPower": "0.9",
+    "voltage": "0.38",
+    "count": "2",
+    "capacity": "120",
+    "coefUsage": "0.8",
+    "coeffReactPower": "0"
+  }
+]

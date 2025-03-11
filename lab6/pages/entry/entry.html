@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор електричних навантажень</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .ep-group {
+            flex: 1 1 22%;
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px;
+            background-color: #6200EE;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Практична робота №6</div>
+        <div>Розробник: Новотка Вікторія</div>
+
+        <h2>Завдання 1</h2>
+        <p>Калькулятор розрахунку електричних навантажень об’єктів.</p>
+
+        <form id="calcForm" method="POST" action="/calculate">
+            <!-- EP1 Group -->
+            <div class="ep-group standart">
+                <p>ЕП1</p>
+                <div class="input-group">
+                    <label for="ep1-name">Name:</label>
+                    <input id="ep1-name" type="text" name="ep1-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep1-coeffUsefulAct" type="number" name="ep1-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-coeffPower">CoeffPower:</label>
+                    <input id="ep1-coeffPower" type="number" name="ep1-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-voltage">Voltage:</label>
+                    <input id="ep1-voltage" type="number" name="ep1-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-count">Count:</label>
+                    <input id="ep1-count" type="number" name="ep1-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-capacity">Capacity:</label>
+                    <input id="ep1-capacity" type="number" name="ep1-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-coefUsage">CoefUsage:</label>
+                    <input id="ep1-coefUsage" type="number" name="ep1-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep1-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep1-coeffReactPower" type="number" name="ep1-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP2 Group -->
+            <div class="ep-group standart">
+                <p>ЕП2</p>
+                <div class="input-group">
+                    <label for="ep2-name">Name:</label>
+                    <input id="ep2-name" type="text" name="ep2-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep2-coeffUsefulAct" type="number" name="ep2-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-coeffPower">CoeffPower:</label>
+                    <input id="ep2-coeffPower" type="number" name="ep2-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-voltage">Voltage:</label>
+                    <input id="ep2-voltage" type="number" name="ep2-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-count">Count:</label>
+                    <input id="ep2-count" type="number" name="ep2-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-capacity">Capacity:</label>
+                    <input id="ep2-capacity" type="number" name="ep2-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-coefUsage">CoefUsage:</label>
+                    <input id="ep2-coefUsage" type="number" name="ep2-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep2-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep2-coeffReactPower" type="number" name="ep2-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP3 Group -->
+            <div class="ep-group standart">
+                <p>ЕП3</p>
+                <div class="input-group">
+                    <label for="ep3-name">Name:</label>
+                    <input id="ep3-name" type="text" name="ep3-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep3-coeffUsefulAct" type="number" name="ep3-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-coeffPower">CoeffPower:</label>
+                    <input id="ep3-coeffPower" type="number" name="ep3-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-voltage">Voltage:</label>
+                    <input id="ep3-voltage" type="number" name="ep3-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-count">Count:</label>
+                    <input id="ep3-count" type="number" name="ep3-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-capacity">Capacity:</label>
+                    <input id="ep3-capacity" type="number" name="ep3-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-coefUsage">CoefUsage:</label>
+                    <input id="ep3-coefUsage" type="number" name="ep3-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep3-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep3-coeffReactPower" type="number" name="ep3-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP4 Group -->
+            <div class="ep-group standart">
+                <p>ЕП4</p>
+                <div class="input-group">
+                    <label for="ep4-name">Name:</label>
+                    <input id="ep4-name" type="text" name="ep4-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep4-coeffUsefulAct" type="number" name="ep4-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-coeffPower">CoeffPower:</label>
+                    <input id="ep4-coeffPower" type="number" name="ep4-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-voltage">Voltage:</label>
+                    <input id="ep4-voltage" type="number" name="ep4-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-count">Count:</label>
+                    <input id="ep4-count" type="number" name="ep4-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-capacity">Capacity:</label>
+                    <input id="ep4-capacity" type="number" name="ep4-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-coefUsage">CoefUsage:</label>
+                    <input id="ep4-coefUsage" type="number" name="ep4-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep4-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep4-coeffReactPower" type="number" name="ep4-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP5 Group -->
+            <div class="ep-group standart">
+                <p>ЕП5</p>
+                <div class="input-group">
+                    <label for="ep5-name">Name:</label>
+                    <input id="ep5-name" type="text" name="ep5-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep5-coeffUsefulAct" type="number" name="ep5-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-coeffPower">CoeffPower:</label>
+                    <input id="ep5-coeffPower" type="number" name="ep5-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-voltage">Voltage:</label>
+                    <input id="ep5-voltage" type="number" name="ep5-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-count">Count:</label>
+                    <input id="ep5-count" type="number" name="ep5-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-capacity">Capacity:</label>
+                    <input id="ep5-capacity" type="number" name="ep5-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-coefUsage">CoefUsage:</label>
+                    <input id="ep5-coefUsage" type="number" name="ep5-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep5-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep5-coeffReactPower" type="number" name="ep5-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP6 Group -->
+            <div class="ep-group standart">
+                <p>ЕП6</p>
+                <div class="input-group">
+                    <label for="ep6-name">Name:</label>
+                    <input id="ep6-name" type="text" name="ep6-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep6-coeffUsefulAct" type="number" name="ep6-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-coeffPower">CoeffPower:</label>
+                    <input id="ep6-coeffPower" type="number" name="ep6-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-voltage">Voltage:</label>
+                    <input id="ep6-voltage" type="number" name="ep6-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-count">Count:</label>
+                    <input id="ep6-count" type="number" name="ep6-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-capacity">Capacity:</label>
+                    <input id="ep6-capacity" type="number" name="ep6-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-coefUsage">CoefUsage:</label>
+                    <input id="ep6-coefUsage" type="number" name="ep6-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep6-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep6-coeffReactPower" type="number" name="ep6-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP7 Group -->
+            <div class="ep-group standart">
+                <p>ЕП7</p>
+                <div class="input-group">
+                    <label for="ep7-name">Name:</label>
+                    <input id="ep7-name" type="text" name="ep7-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep7-coeffUsefulAct" type="number" name="ep7-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-coeffPower">CoeffPower:</label>
+                    <input id="ep7-coeffPower" type="number" name="ep7-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-voltage">Voltage:</label>
+                    <input id="ep7-voltage" type="number" name="ep7-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-count">Count:</label>
+                    <input id="ep7-count" type="number" name="ep7-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-capacity">Capacity:</label>
+                    <input id="ep7-capacity" type="number" name="ep7-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-coefUsage">CoefUsage:</label>
+                    <input id="ep7-coefUsage" type="number" name="ep7-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep7-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep7-coeffReactPower" type="number" name="ep7-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <!-- EP8 Group -->
+            <div class="ep-group standart">
+                <p>ЕП8</p>
+                <div class="input-group">
+                    <label for="ep8-name">Name:</label>
+                    <input id="ep8-name" type="text" name="ep8-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep8-coeffUsefulAct" type="number" name="ep8-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-coeffPower">CoeffPower:</label>
+                    <input id="ep8-coeffPower" type="number" name="ep8-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-voltage">Voltage:</label>
+                    <input id="ep8-voltage" type="number" name="ep8-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-count">Count:</label>
+                    <input id="ep8-count" type="number" name="ep8-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-capacity">Capacity:</label>
+                    <input id="ep8-capacity" type="number" name="ep8-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-coefUsage">CoefUsage:</label>
+                    <input id="ep8-coefUsage" type="number" name="ep8-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep8-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep8-coeffReactPower" type="number" name="ep8-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <div class="ep-group extra">
+                <p>Крупні ЕП1</p>
+                <div class="input-group">
+                    <label for="ep9-name">Name:</label>
+                    <input id="ep9-name" type="text" name="ep9-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep9-coeffUsefulAct" type="number" name="ep9-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-coeffPower">CoeffPower:</label>
+                    <input id="ep9-coeffPower" type="number" name="ep9-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-voltage">Voltage:</label>
+                    <input id="ep9-voltage" type="number" name="ep9-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-count">Count:</label>
+                    <input id="ep9-count" type="number" name="ep9-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-capacity">Capacity:</label>
+                    <input id="ep9-capacity" type="number" name="ep9-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-coefUsage">CoefUsage:</label>
+                    <input id="ep9-coefUsage" type="number" name="ep9-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep9-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep9-coeffReactPower" type="number" name="ep9-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <div class="ep-group extra">
+                <p>Крупні ЕП2</p>
+                <div class="input-group">
+                    <label for="ep10-name">Name:</label>
+                    <input id="ep10-name" type="text" name="ep10-text" placeholder="Name">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-coeffUsefulAct">CoeffUsefulAct:</label>
+                    <input id="ep10-coeffUsefulAct" type="number" name="ep10-coeffUsefulAct" step="0.01"
+                        placeholder="CoeffUsefulAct">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-coeffPower">CoeffPower:</label>
+                    <input id="ep10-coeffPower" type="number" name="ep10-coeffPower" step="0.01" placeholder="CoeffPower">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-voltage">Voltage:</label>
+                    <input id="ep10-voltage" type="number" name="ep10-voltage" step="0.01" placeholder="Voltage">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-count">Count:</label>
+                    <input id="ep10-count" type="number" name="ep10-count" placeholder="Count">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-capacity">Capacity:</label>
+                    <input id="ep10-capacity" type="number" name="ep10-capacity" placeholder="Capacity">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-coefUsage">CoefUsage:</label>
+                    <input id="ep10-coefUsage" type="number" name="ep10-coefUsage" step="0.01" placeholder="CoefUsage">
+                </div>
+                <div class="input-group">
+                    <label for="ep10-coeffReactPower">CoeffReactPower:</label>
+                    <input id="ep10-coeffReactPower" type="number" name="ep10-coeffReactPower" step="0.01"
+                        placeholder="CoeffReactPower">
+                </div>
+            </div>
+
+            <div>
+                <button class="btn" type="submit">Розрахувати</button>
+                <button class="btn" type="button" onclick="fillForm()">Заповнити поля standart</button>
+                <button class="btn" type="button" onclick="fillFormExtra()">Заповнити поля extra</button>
+            </div>
+
+        </form>
+
+        <div id="result">
+            {{if .Success}}
+            <p>Для заданого складу ЕП та їх характеристик цехової мережі силове навантаження становитиме:</p>
+            <ol>
+                <li>Груповий коефіцієнт використання для ШР1=ШР2=ШР3: {{.Result.KV}}</li> 
+                <li>Ефективна кількість ЕП для ШР1=ШР2=ШР3: {{.Result.NPhSum}}</li> <!-- 15!!! -->
+                <li>Розрахунковий коефіцієнт активної потужності для ШР1=ШР2=ШР3: {{.Result.Pp}}</li> <!-- 1.25!!!-->
+                <li>Розрахункове активне навантаження для ШР1=ШР2=ШР3: {{.Result.Sp}}</li> <!-- 118.95!!! -->
+                <li>Розрахункове реактивне навантаження для ШР1=ШР2=ШР3: {{.Result.Ip}}</li> <!-- 107.3!!! -->
+                <li>Повна потужність для ШР1=ШР2=ШР3: {{.Result.AllKV}}</li> <!-- 160.2!!! -->
+                <li>Розрахунковий груповий струм для ШР1=ШР2=ШР3: {{.Result.AllNe}}</li> <!-- 313.03!!! -->
+                <li>Коефіцієнти використання цеху в цілому: {{index .Result.ResultArray 7}}</li> <!-- 0.32 -->
+                <li>Ефективна кількість ЕП цеху в цілому: {{index .Result.ResultArray 8}}</li> <!-- 56.32 -->
+                <li>Розрахунковий коефіцієнт активної потужності цеху в цілому: {{index .Result.ResultArray 9}}</li>
+                <!-- 0.7 -->
+                <li>Розрахункове активне навантаження на шинах 0,38 кВ ТП: {{index .Result.ResultArray 10}}</li>
+                <!-- 526.4 -->
+                <li>Розрахункове реактивне навантаження на шинах 0,38 кВ ТП: {{index .Result.ResultArray 11}}</li>
+                <!-- 459.9 -->
+                <li>Повна потужність на шинах 0,38 кВ ТП: {{index .Result.ResultArray 12}}</li> <!-- 699 -->
+                <li>Розрахунковий груповий струм на шинах 0,38 кВ ТП: {{index .Result.ResultArray 13}}</li>
+                <!-- 1385.26 -->
+            </ol>
+            {{else}}
+            <!-- <p>Результати розрахунку не можуть бути виведені через помилку у значеннях.</p> -->
+            {{end}}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("calcForm").addEventListener("submit", async function (event) {
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            try {
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: data,
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    document.getElementById('result').innerHTML = `<p>${result}</p>`;
+                } else {
+                    console.log('Error submitting form:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        async function fillForm() {
+            try {
+                const response = await fetch('../../assets/testInputs.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                data.forEach((item, index) => {
+                    const epIndex = index + 1; // Convert to 1-based index for field names
+
+                    document.querySelector(`input[name="ep${epIndex}-text"]`).value = item.name;
+                    document.querySelector(`input[name="ep${epIndex}-coeffUsefulAct"]`).value = item.coeffUsefulAct;
+                    document.querySelector(`input[name="ep${epIndex}-coeffPower"]`).value = item.coeffPower;
+                    document.querySelector(`input[name="ep${epIndex}-voltage"]`).value = item.voltage;
+                    document.querySelector(`input[name="ep${epIndex}-count"]`).value = item.count;
+                    document.querySelector(`input[name="ep${epIndex}-capacity"]`).value = item.capacity;
+                    document.querySelector(`input[name="ep${epIndex}-coefUsage"]`).value = item.coefUsage;
+                    document.querySelector(`input[name="ep${epIndex}-coeffReactPower"]`).value = item.coeffReactPower;
+                });
+            } catch ({ name, message }) {
+                console.error('Error loading JSON data');
+                console.log(name);
+                console.log(message);
+            }
+        }
+
+        async function fillFormExtra() {
+            try {
+                const response = await fetch('../../assets/extraEPdata.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                data.forEach((item, index) => {
+                    const epIndex = index + 9;
+                    document.querySelector(`input[name="ep${epIndex}-text"]`).value = item.name;
+                    document.querySelector(`input[name="ep${epIndex}-coeffUsefulAct"]`).value = item.coeffUsefulAct;
+                    document.querySelector(`input[name="ep${epIndex}-coeffPower"]`).value = item.coeffPower;
+                    document.querySelector(`input[name="ep${epIndex}-voltage"]`).value = item.voltage;
+                    document.querySelector(`input[name="ep${epIndex}-count"]`).value = item.count;
+                    document.querySelector(`input[name="ep${epIndex}-capacity"]`).value = item.capacity;
+                    document.querySelector(`input[name="ep${epIndex}-coefUsage"]`).value = item.coefUsage;
+                    document.querySelector(`input[name="ep${epIndex}-coeffReactPower"]`).value = item.coeffReactPower;
+                });
+            } catch ({ name, message }) {
+                console.error('Error loading JSON data');
+                console.log(name);
+                console.log(message)
+            }
+        }
+    </script>
+</body>
+
+</html>
