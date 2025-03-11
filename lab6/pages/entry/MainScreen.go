@@ -123,7 +123,7 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 		Ip:  resultArray[6],
 	}
 	
-	tmpl, err := template.ParseFiles("templates/main.html")
+	tmpl, err := template.ParseFiles("pages/entry/entry.html")
 	if err != nil {
 		http.Error(w, "Template not found", http.StatusInternalServerError)
 		return
